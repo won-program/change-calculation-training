@@ -1,0 +1,49 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b5d">
+  <title>おつり計算トレーニング</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><div class="brand-mark" aria-hidden="true">¥</div><div><p class="eyebrow">CHANGE CALCULATION TRAINING</p><h1>おつり計算トレーニング</h1></div></header>
+  <main id="app" class="shell">
+    <section id="home-screen" class="screen card" aria-labelledby="home-title">
+      <p class="eyebrow accent">PRACTICE</p><h2 id="home-title" class="hero-title">暗算力・正確性・計算スピードを<br>鍛えよう</h2>
+      <p class="intro">表示された商品価格を1000円から引いて、おつりを入力してください。</p>
+      <div class="mode-card"><span class="mode-icon" aria-hidden="true">¥</span><div><p class="eyebrow">現在のトレーニング</p><h3>お釣り計算</h3><p>表示された商品価格を1000円から引いて、おつりを入力してください。</p><p class="example-flow">商品価格 327円 <span>↓</span> 1000 − 327 <span>↓</span> おつり 673円</p></div></div>
+      <fieldset class="question-picker"><legend>問題数を選択</legend><div class="choice-row" role="group" aria-label="問題数"><button type="button" class="choice-button" data-question-count="10" aria-pressed="false">10問</button><button type="button" class="choice-button" data-question-count="25" aria-pressed="false">25問</button><button type="button" class="choice-button is-selected" data-question-count="50" aria-pressed="true">50問</button><button type="button" class="choice-button" data-question-count="100" aria-pressed="false">100問</button></div></fieldset>
+      <div class="actions"><button id="start-button" class="button primary">50問チャレンジ開始</button><button id="records-button" class="button secondary">成績を見る</button></div>
+    </section>
+
+    <section id="quiz-screen" class="screen card" aria-labelledby="question-title" hidden>
+      <div class="quiz-heading"><p id="question-count" class="question-count">問題 1 / 50</p><div class="timer-wrap"><span class="eyebrow">経過時間</span><output id="timer" class="timer" aria-live="off">00:00.00</output></div></div>
+      <div class="progress-track" role="progressbar" aria-label="問題の進行状況" aria-valuemin="0" aria-valuemax="50" aria-valuenow="0"><div id="progress-bar" class="progress-bar"></div></div>
+      <div class="payment-area"><h2 class="payment-title">1000円で支払います</h2><div class="bill-card" aria-label="架空の1000円札"><span class="bill-label">お支払い</span><strong>¥1,000</strong><span class="bill-caption">1000円札</span></div></div>
+      <div class="question-area"><p class="eyebrow">商品価格</p><h2 id="price" class="price">¥327</h2><h3 id="question-title" class="question-prompt">おつりはいくら？</h3></div>
+      <form id="answer-form" novalidate><label class="answer-label" for="answer-input">お釣りを入力</label><div class="answer-row"><span class="yen-prefix" aria-hidden="true">¥</span><input id="answer-input" name="answer" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" aria-describedby="answer-feedback" autofocus><button class="button primary answer-button" type="submit">回答</button></div><p id="answer-feedback" class="feedback" aria-live="polite"></p></form>
+      <p class="quiz-note">Enterキーでも回答できます。間違えた場合も次の問題へ進みます。</p>
+    </section>
+
+    <section id="result-screen" class="screen card" aria-labelledby="result-title" hidden>
+      <p class="eyebrow accent">RESULT</p><h2 id="result-title" class="section-title">チャレンジ終了！</h2><p id="result-summary" class="result-summary">50問お疲れさまでした。今回の結果を記録しました。</p>
+      <div class="result-stats"><div class="stat"><span>総合タイム</span><strong id="result-time">00:00.00</strong></div><div class="stat"><span>正解</span><strong id="result-correct">0 / 50</strong></div><div class="stat"><span>正答率</span><strong id="result-accuracy">0%</strong></div><div class="stat"><span>平均回答時間</span><strong id="result-average">0.00秒 / 問</strong></div></div>
+      <div id="comparison" class="comparison" hidden></div><div class="actions"><button id="again-button" class="button primary">もう一度挑戦</button><button id="result-records-button" class="button secondary">成績を見る</button><button id="home-button" class="button text-button">トップへ戻る</button></div>
+    </section>
+
+    <section id="records-screen" class="screen card" aria-labelledby="records-title" hidden>
+      <div class="records-heading"><div><p class="eyebrow accent">YOUR PROGRESS</p><h2 id="records-title" class="section-title">成績</h2></div><button id="records-home-button" class="button secondary">トップへ戻る</button></div>
+      <div class="record-filters" role="group" aria-label="問題数で成績を絞り込む"><button type="button" class="filter-button is-selected" data-record-filter="all" aria-pressed="true">すべて</button><button type="button" class="filter-button" data-record-filter="10" aria-pressed="false">10問</button><button type="button" class="filter-button" data-record-filter="25" aria-pressed="false">25問</button><button type="button" class="filter-button" data-record-filter="50" aria-pressed="false">50問</button><button type="button" class="filter-button" data-record-filter="100" aria-pressed="false">100問</button></div>
+      <div id="records-empty" class="empty-state">まだ記録がありません。チャレンジに挑戦すると、ここに成績が表示されます。</div>
+      <div id="records-content" hidden><div class="personal-bests"><div class="stat"><span>ベストタイム</span><strong id="best-time">—</strong></div><div class="stat"><span>最高正解数</span><strong id="best-correct">—</strong></div><div class="stat"><span>最高正答率</span><strong id="best-accuracy">—</strong></div><div class="stat"><span>平均タイム</span><strong id="mean-time">—</strong></div><div class="stat"><span>平均正答率</span><strong id="mean-accuracy">—</strong></div></div>
+      <div class="chart-card"><div class="chart-heading"><div><h3>タイムの推移</h3><p id="chart-description">横軸：挑戦回数 ／ 縦軸：タイム</p></div></div><div class="chart-wrap"><svg id="time-chart" role="img" aria-label="チャレンジごとのタイム推移"></svg></div></div>
+      <div class="table-wrap"><table><thead><tr><th>日時</th><th>問題数</th><th>タイム</th><th>正解</th><th>正答率</th><th>平均時間</th></tr></thead><tbody id="records-body"></tbody></table></div></div>
+      <div class="records-footer"><p id="record-count" class="record-count"></p><button id="delete-records-button" class="button danger" disabled>成績データを削除</button></div>
+    </section>
+  </main>
+  <footer>計算トレーニング <span>•</span> 記録はこのブラウザ内に保存されます</footer>
+</body>
+</html>
